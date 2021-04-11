@@ -1,4 +1,6 @@
-package com.exercise.model;
+package com.exercise.domain;
+
+import org.springframework.data.annotation.Id;
 
 public class Customer {
 

@@ -1,4 +1,4 @@
-package com.exercise.model;
+package com.exercise.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,7 +15,7 @@ public class Ticket {
     private String userID;
     private String assignedTo;
     private String priority;
-    private String status ;
+    private Status status ;
 
     public String getId() {
         return id;
