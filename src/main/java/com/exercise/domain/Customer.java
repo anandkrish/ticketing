@@ -8,6 +8,7 @@ public class Customer {
     private String userID;
     private String firstName;
     private String lastName;
+    private String emailId;
 
 
     public String getUserID() {
@@ -32,5 +33,13 @@ public class Customer {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmailId() {
+        return emailId;
+    }
+
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
     }
 }

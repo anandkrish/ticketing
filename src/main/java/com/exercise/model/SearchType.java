@@ -7,7 +7,7 @@ public enum SearchType {
     BY_AGENT("AGENT");
 
     private SearchType(String search) {
-        this.search = search
+        this.search = search;
     }
     private String search;
 

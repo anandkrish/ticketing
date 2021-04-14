@@ -1,7 +1,9 @@
 package com.exercise.controller;
 
+import com.exercise.domain.Agent;
 import com.exercise.domain.Status;
 import com.exercise.domain.Ticket;
+import com.exercise.domain.TicketUpdateMap;
 import com.exercise.model.TicketSearchModel;
 import com.exercise.service.TicketService;
 import org.slf4j.Logger;
@@ -73,4 +75,64 @@ public class TicketController {
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
     }
+
+
+    @RequestMapping(value = "/editTicket/{id}", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Ticket> editTicket(@PathVariable("id") String id, @RequestBody TicketUpdateMap ticketMap) {
+        Optional<Ticket> ticketbyId  = ticketService.getTicketById(id);
+        if(ticketbyId.isPresent()) {
+            Ticket tk = new Ticket();
+            boolean updatedRes = ticketService.editTicketDetails(ticketMap.getTicketUpdates());
+            if (updatedRes) {
+                tk.setRespStatus(1);
+                tk.setErrorMessage("Updated Success");
+                return new ResponseEntity<>(tk,HttpStatus.OK);
+            } else {
+                tk.setRespStatus(-1);
+                tk.setErrorMessage("Updated Failed");
+                return new ResponseEntity<>(tk,HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else {
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = "/deleteTicket/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Ticket> deleteTicket(@PathVariable("id") String id) {
+        Optional<Ticket> ticket  = ticketService.getTicketById(id);
+        if(ticket.isPresent()) {
+            boolean deleRes = ticketService.deleteTicket(id);
+            if (deleRes) {
+                return new ResponseEntity<>(ticket.get(),HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(new Ticket(id),HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else {
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    @RequestMapping(value = "/assignTicket/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Ticket> assignTicket(@PathVariable("id") String id, @RequestBody Agent agent) {
+        Optional<Ticket> ticket  = ticketService.getTicketById(id);
+        if(ticket.isPresent()) {
+             ticketService.assignTicket(id,agent);
+            return new ResponseEntity<>(ticket.get(),HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+//    @RequestMapping(value = "/updateStatus/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<Ticket> updateStatus(@PathVariable("id") String id, ) {
+//        Optional<Ticket> ticket  = ticketService.getTicketById(id);
+//        if(ticket.isPresent()) {
+//            boolean deleRes = ticketService.deleteTicket(id);
+//            return new ResponseEntity<>(ticket.get(),HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+//        }
+//    }
 }

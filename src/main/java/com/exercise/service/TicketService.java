@@ -1,10 +1,12 @@
 package com.exercise.service;
 
+import com.exercise.domain.Agent;
 import com.exercise.domain.Ticket;
 import com.exercise.model.TicketSearchModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -17,5 +19,11 @@ public interface TicketService {
     List<Ticket> getFilteredTickets(TicketSearchModel ticketSearchModel);
 
     Optional<Ticket> getTicketById(String id);
+
+    boolean editTicketDetails(Map<String, String> ticket);
+
+    boolean deleteTicket(String id);
+
+    boolean assignTicket(String id, Agent agent);
 }
 

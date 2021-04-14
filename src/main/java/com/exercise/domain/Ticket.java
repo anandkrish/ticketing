@@ -3,8 +3,10 @@ package com.exercise.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 @Document(collection = "ticket")
-public class Ticket {
+public class Ticket extends ResponseError {
 
     @Id
     private String id ;
@@ -14,8 +16,13 @@ public class Ticket {
     private String createdBy;
     private String userID;
     private String assignedTo;
+    private String resolutionInfo;
+    private String comments;
     private String priority;
     private Status status ;
+    private Date createdDate;
+    private Date modifiedDate;
+    private String modifiedBy;
 
     public String getId() {
         return id;
@@ -57,8 +64,6 @@ public class Ticket {
         this.createdBy = createdBy;
     }
 
-
-
     public String getAssignedTo() {
         return assignedTo;
     }
@@ -75,14 +80,6 @@ public class Ticket {
         this.priority = priority;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public String getUserID() {
         return userID;
     }
@@ -90,4 +87,60 @@ public class Ticket {
     public void setUserID(String userID) {
         this.userID = userID;
     }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
+
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
+
+    public String getResolutionInfo() {
+        return resolutionInfo;
+    }
+
+    public void setResolutionInfo(String resolutionInfo) {
+        this.resolutionInfo = resolutionInfo;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public Ticket() {
+
+    }
+    public Ticket(String id) {
+        this.id = id;
+    }
+
 }
