@@ -4,6 +4,7 @@ import com.exercise.domain.Agent;
 import com.exercise.domain.Status;
 import com.exercise.domain.Ticket;
 import com.exercise.domain.TicketUpdateMap;
+import com.exercise.exception.EmailNotSendExecption;
 import com.exercise.model.TicketSearchModel;
 import com.exercise.service.TicketService;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -78,11 +80,11 @@ public class TicketController {
 
 
     @RequestMapping(value = "/editTicket/{id}", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Ticket> editTicket(@PathVariable("id") String id, @RequestBody TicketUpdateMap ticketMap) {
+    public ResponseEntity<Ticket> editTicket(@PathVariable("id") String id, @RequestBody TicketUpdateMap ticketMap) throws IOException, EmailNotSendExecption {
         Optional<Ticket> ticketbyId  = ticketService.getTicketById(id);
         if(ticketbyId.isPresent()) {
             Ticket tk = new Ticket();
-            boolean updatedRes = ticketService.editTicketDetails(ticketMap.getTicketUpdates());
+            boolean updatedRes = ticketService.editTicketDetails  (ticketMap.getTicketUpdates());
             if (updatedRes) {
                 tk.setRespStatus(1);
                 tk.setErrorMessage("Updated Success");

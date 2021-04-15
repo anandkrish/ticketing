@@ -2,9 +2,11 @@ package com.exercise.service;
 
 import com.exercise.domain.Agent;
 import com.exercise.domain.Ticket;
+import com.exercise.exception.EmailNotSendExecption;
 import com.exercise.model.TicketSearchModel;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -20,7 +22,7 @@ public interface TicketService {
 
     Optional<Ticket> getTicketById(String id);
 
-    boolean editTicketDetails(Map<String, String> ticket);
+    boolean editTicketDetails(Map<String, String> ticket) throws EmailNotSendExecption, IOException;
 
     boolean deleteTicket(String id);
 
